@@ -91,7 +91,7 @@ Academic Year 2025--2026
         \subsubsection{Goals}
             \begin{enumerate}[label=G\arabic*:, itemsep=0.5em]
               \item \textbf{Support trip recording:} The system shall allow registered users to record their cycling trips and store them for future consultation.
-              \item \textbf{Provide meaningful trip insights:} The system shall analyse recorded trips and present users with relevant statistics, such as distance, duration, and performance metrics.
+              \item \textbf{Provide meaningful trip insights:} The system shall analyze recorded trips and present users with relevant statistics, such as distance, duration, and performance metrics.
               \item \textbf{Enable sharing of bike path information:} The system shall allow users to contribute information about bike paths and make it available to the community.
               \item \textbf{Support automated path acquisition:} The system shall allow users to start an automated tracking session during a bike ride, during which the system acquires path data through the device’s sensors.
               \item \textbf{Report obstacles and path conditions:} The system shall identify, store, and display potential obstacles or hazards along bike paths to inform and alert users.
@@ -184,11 +184,14 @@ Academic Year 2025--2026
 
         \subsubsection{Scenarios}
             \textbf{User Searches for a Bike Path to Reach a Specific Destination}
+            
             User \textbf{U} intends to ride their bicycle to a particular destination. They open the BBP client on their smartphone and log in if not already authenticated. Next, they navigate to the search field and enter the desired destination.
             
             BBP then displays a set of paths leading toward the destination. While some paths may not reach the destination precisely, all are presented as potential options. The available paths are displayed both on a map preview and as a list. BBP clearly highlights the most optimal path, considering factors such as distance, path quality, presence of obstacles, and estimated duration.
             
             User \textbf{U} selects a preferred path and presses the ``Go'' button, which redirects them to the Navigation screen. Here, a map and a textual/visual representation of turn-by-turn instructions guide \textbf{U} to the destination while they ride their bike with their smartphone secured in a bike holder.
+
+            At the end of the Trip, the system analyzes the recorded sensor data. If differences are detected in the Path’s status or in any obstacles (new or existing), the system prompts User \textbf{U} to verify the information and, if confirmed, publish an update.
             
             \textit{Note:} In this scenario, multiple paths exist to the destination. If no path is available, BBP will prompt the user to add the missing path, and the process continues as described in the next section.
             
@@ -282,6 +285,7 @@ Academic Year 2025--2026
     
     \subsection{Product Functions}
         \textbf{Sign Up and Login}
+        
         The sign-up process is straightforward. Users may register using a traditional email-and-password method or via Single Sign-On (SSO). The system should support the main SSO providers, particularly those natively integrated with mobile operating systems, such as Google and Apple. Optionally, third-party providers, such as Meta (Sign in with Facebook), may also be integrated.
         
         To log in, users enter their email address and password and select the ``Login'' button. The system then verifies the credentials and, if correct, authenticates the user. Alternatively, users may select an SSO provider, in which case they are redirected to the provider’s authentication page. Upon successful authentication, the user is redirected back to BBP, which grants access to the application.
@@ -297,6 +301,8 @@ Academic Year 2025--2026
         \textbf{Navigating to a Destination}  
         
         After selecting a path, the user can initiate navigation by pressing the ``Start Navigation'' button. This action begins a trip recording event during which BBP records sensor data and provides turn-by-turn navigation instructions. The user can then follow the path to reach the destination.
+
+        Similarly to the Automated Mode for registering a Path, BBP uses sensor data during the Trip to estimate the status of each Path segment, verify whether known Obstacles are still present, and detect any new Obstacles. At the end of the Trip, if discrepancies are found, the system prompts the User to confirm the information and, if approved, publish updates to the Path and Obstacles in the system.
         
         \vspace{0.5em}
         \textbf{Automated Mode}  
@@ -307,7 +313,7 @@ Academic Year 2025--2026
         
         At the conclusion of the trip, BBP presents an overview of the recorded data and prompts the user to confirm or edit it. The path may then be published and made publicly accessible if the user chooses.
         
-        Importantly, BBP does not automatically start tracking in the background; the session begins only when initiated by the user. After the session, the user reviews and confirms or corrects any detected obstacles before the data is published to the community, ensuring accuracy and avoiding false positives.
+        Importantly, BBP does not automatically start tracking in the background; the session begins only when initiated by the user. This design choice is due to platform limitations: continuous background tracking is restricted on iOS and difficult to implement reliably on Android. After the session, the user reviews and confirms or corrects any detected obstacles before the data is published to the community, ensuring accuracy and avoiding false positives.
         
         \vspace{0.5em}
         \textbf{Manual Mode}  
@@ -385,7 +391,9 @@ Academic Year 2025--2026
             Users who perform actions involving data creation or modification that affect the shared system state (e.g., inserting or publishing Paths, contributing Obstacle information) are registered and authenticated in the system.
             
             \item[D2: Anonymous User Capabilities\\] 
-            Unregistered users can use the system to browse available bike Paths, search for routes between locations, and record Trips. Trips recorded by unregistered Users are stored only locally on the user’s device.
+            Unregistered users can use the system to browse available bike Paths, search for routes between locations, and record Trips. 
+            
+            Trips recorded by unregistered Users are stored only locally on the user’s device.
             
             \item[D3: Isolation of Anonymous User Data\\] 
             Data generated by unregistered Users, including recorded Trips and related statistics, is not stored in the system’s database and does not contribute to shared Path information, Obstacle detection, or Path status evaluation.
@@ -411,7 +419,7 @@ Academic Year 2025--2026
             \end{description}
             
 
-%\newpage
+\newpage
 
 \section{Specific Requirements}
     \subsection{External Interface Requirements}
@@ -424,6 +432,7 @@ Academic Year 2025--2026
             
             Here are some wireframe design mockups for the layout of BBP, platform-agnostic at the moment. High level mockups will be provided in the following Design Document.
 
+            % First part of the figure
             \begin{figure}[H]
                 \centering
                 
@@ -447,9 +456,15 @@ Academic Year 2025--2026
                     \caption{Add Path - Manual}
                     \label{fig:add_path_manual}
                 \end{subfigure}
-
-                \vspace{1em} % small vertical spacing between rows
-                
+            
+                \caption{Mockup screens of the BBP mobile app UI layout (part 1)}
+                \label{fig:mockups_part1}
+            \end{figure}
+            
+            % Continued part of the figure
+            \begin{figure}[H]\ContinuedFloat
+                \centering
+            
                 \begin{subfigure}[b]{0.3\textwidth}
                     \centering
                     \includegraphics[width=\textwidth]{Wireframe - Automated Path Recording.png}
@@ -470,9 +485,8 @@ Academic Year 2025--2026
                     \caption{Trip and Navigation}
                     \label{fig:trip_navigation}
                 \end{subfigure}
-                
-                \caption{Mockup screens of the BBP mobile app UI layout}
-                \label{fig:mockups}
+            
+                \caption{Mockup screens of the BBP mobile app UI layout (part 2)}
             \end{figure}
         
         \subsubsection{Hardware Interfaces}
@@ -495,7 +509,7 @@ Academic Year 2025--2026
                 
             \end{description}
         
-    \subsubsection{Software Interfaces}
+    \subsubsection{Communication Interfaces}
         The BBP mobile application communicates with users and external services through secure APIs. All interactions, including data transmission and location information, must be encrypted using HTTPS.
         
         User authentication is supported via two mechanisms:
@@ -549,7 +563,7 @@ Academic Year 2025--2026
         \end{description}
         
         \subsubsection{Use Case Diagram}
-            \begin{figure}[h]
+            \begin{figure}[H]
                 \centering
                 \includegraphics[width=\textwidth]{Use_Case_Diagram.pdf}
                 \caption{Connection between user categories and their associated use cases.}
@@ -1094,6 +1108,7 @@ Academic Year 2025--2026
         
         \subsubsection{Hardware Limitations}                
             \paragraph{Minimum Requirements}\mbox{}
+            
             Users will access the system via a native mobile application developed for their OS. The client performs minimal local computation, primarily retrieving data and rendering maps.  
             The devices must run a supported OS version:
             \begin{itemize}
@@ -1182,6 +1197,8 @@ Academic Year 2025--2026
         
         \subsubsection{Portability}
             The system should be compatible with most smartphones still in use, as we discussed previously (paragraph 3.4.2). 
+
+\newpage
   
 \section{Formal analysis using Alloy}
 
@@ -1359,3 +1376,4 @@ Summa C. & 4 & 5 & 7 & 5 \\
     \end{itemize}
 
 \end{document}
+
