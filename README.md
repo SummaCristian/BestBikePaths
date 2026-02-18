@@ -11,7 +11,7 @@ By leveraging both individual data and collective insights, BBP supports informe
 Through this unified approach, BBP aims to enhance the overall cycling experience, empowering users to navigate urban spaces with greater confidence, safety, and awareness, while promoting a community-oriented model of sustainable mobility.
 
 >[!NOTE]
-> This project was developed for the Software Enginnering 2 course at Politecnico di Milano.
+> This project was developed for the Software Engineering 2 course at Politecnico di Milano.
 > It's worth half the exam, corresponding to the `R&DD` project.
 > It consists of producing two technical documents, a *Requirements Analysis and Specification Document* (RASD) and a *Design Document* (DD).
 
