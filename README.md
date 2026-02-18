@@ -1,4 +1,9 @@
+<div align='center'>
+  <img src='./icon.png' width='150'>
+
 # Best Bike Paths
+</div>
+
 **Best Bike Paths (BBP)** is an integrated platform that bridges this gap by combining personal ride tracking with collaborative mapping of bike path conditions. The system enables cyclists to record and analyse their trips while actively contributing to a shared repository of information regarding path quality, obstacles, and overall cycling experience.
 
 By leveraging both individual data and collective insights, BBP supports informed route selection and fosters a more transparent and reliable cycling environment.
